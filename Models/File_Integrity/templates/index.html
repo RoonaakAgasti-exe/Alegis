@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Integrity Checker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #020617; color: #f8fafc; font-family: 'Space Grotesk', sans-serif; overflow-x: hidden; }
+        .glass { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(51, 65, 85, 0.4); }
+        .glow-text { text-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
+        .gradient-border { position: relative; border-radius: 1.5rem; background: linear-gradient(145deg, #1e293b, #0f172a); }
+        .gradient-border::before { content: ""; position: absolute; inset: -1px; border-radius: 1.5rem; padding: 1px; background: linear-gradient(45deg, #3b82f6, #10b981, #3b82f6); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; opacity: 0.3; transition: opacity 0.3s; }
+        .gradient-border:hover::before { opacity: 0.8; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        .pulse-slow { animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+    </style>
+</head>
+<body class="min-h-screen custom-scrollbar selection:bg-blue-500/30">
+    <nav class="fixed top-0 w-full z-50 glass border-b border-slate-800/50 px-8 py-4 flex items-center">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-900/40">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+            </div>
+            <span class="text-2xl font-bold tracking-tighter glow-text">File Integrity Checker</span>
+        </div>
+    </nav>
+
+    <main class="pt-32 pb-20 px-6 max-w-3xl mx-auto">
+        <div class="animate__animated animate__fadeInRight">
+            <div class="gradient-border p-8 glass shadow-2xl relative">
+                    <div class="flex gap-2 p-1 bg-slate-950/50 rounded-2xl mb-8 border border-slate-800/50">
+                        <button id="btn-gen" class="flex-1 py-3 rounded-xl font-bold bg-blue-600 text-white transition-all shadow-lg">Generate</button>
+                        <button id="btn-ver" class="flex-1 py-3 rounded-xl font-bold text-slate-500 hover:text-white transition-all">Verify</button>
+                    </div>
+
+                    <div id="panel-gen" class="space-y-6">
+                        <div class="group relative border-2 border-dashed border-slate-800 rounded-2xl p-16 text-center hover:border-blue-500/50 transition-all cursor-pointer bg-slate-950/20" onclick="document.getElementById('file-gen').click()">
+                            <input type="file" id="file-gen" class="hidden">
+                            <div class="w-16 h-16 bg-slate-900 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-blue-600/10 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-slate-500 group-hover:text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+                            </div>
+                            <p id="label-gen" class="text-slate-400 font-medium">Click to upload or drag & drop</p>
+                            <p class="text-slate-600 text-xs mt-2 font-bold uppercase tracking-widest">Any file type up to 50MB</p>
+                        </div>
+                        <button id="submit-gen" class="w-full py-5 bg-blue-600 hover:bg-blue-700 rounded-2xl font-bold transition-all shadow-xl shadow-blue-900/30 flex items-center justify-center gap-2 group">
+                            <span id="gen-text">Generate Fingerprint</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                        </button>
+                        <div id="result-gen" class="hidden p-6 bg-emerald-500/5 border border-emerald-500/20 rounded-2xl animate__animated animate__fadeInUp">
+                            <div class="flex items-center gap-2 mb-3">
+                                <div class="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                                <p class="text-xs font-bold text-emerald-500 uppercase tracking-widest">SHA-256 Hash Generated</p>
+                            </div>
+                            <p id="hash-val" class="text-slate-300 font-mono text-[10px] break-all p-3 bg-slate-950/50 rounded-lg border border-slate-800/50"></p>
+                            <button onclick="copyHash()" class="text-[10px] text-blue-400 font-bold uppercase mt-3 hover:text-blue-300 transition-colors">Copy to Clipboard</button>
+                        </div>
+                    </div>
+
+                    <div id="panel-ver" class="hidden space-y-6">
+                        <div class="border-2 border-dashed border-slate-800 rounded-2xl p-12 text-center hover:border-blue-500/50 transition-all cursor-pointer bg-slate-950/20" onclick="document.getElementById('file-ver').click()">
+                            <input type="file" id="file-ver" class="hidden">
+                            <p id="label-ver" class="text-slate-400 font-medium">Click to upload verification file</p>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Original SHA-256 Hash</label>
+                            <input type="text" id="hash-input" placeholder="Paste original fingerprint here" class="w-full bg-slate-950/50 border border-slate-800 rounded-2xl p-4 text-white focus:border-blue-500/50 transition-all font-mono text-xs">
+                        </div>
+                        <button id="submit-ver" class="w-full py-5 bg-blue-600 hover:bg-blue-700 rounded-2xl font-bold transition-all shadow-xl shadow-blue-900/30 flex items-center justify-center gap-2">
+                            Verify Authenticity
+                        </button>
+                        <div id="result-ver" class="hidden p-8 rounded-2xl border animate__animated animate__fadeInUp">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div id="ver-icon" class="p-3 rounded-xl"></div>
+                                <div>
+                                    <h3 id="ver-title" class="text-xl font-bold"></h3>
+                                    <p id="ver-msg" class="text-slate-400 text-sm"></p>
+                                </div>
+                            </div>
+                            <div id="anomaly-badge" class="hidden inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase"></div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </main>
+
+
+    <script>
+        const btnGen = document.getElementById('btn-gen');
+        const btnVer = document.getElementById('btn-ver');
+        const panelGen = document.getElementById('panel-gen');
+        const panelVer = document.getElementById('panel-ver');
+
+        btnGen.onclick = () => {
+            btnGen.classList.add('bg-blue-600', 'text-white', 'shadow-lg'); btnGen.classList.remove('text-slate-500');
+            btnVer.classList.remove('bg-blue-600', 'text-white', 'shadow-lg'); btnVer.classList.add('text-slate-500');
+            panelGen.classList.remove('hidden'); panelVer.classList.add('hidden');
+        };
+        btnVer.onclick = () => {
+            btnVer.classList.add('bg-blue-600', 'text-white', 'shadow-lg'); btnVer.classList.remove('text-slate-500');
+            btnGen.classList.remove('bg-blue-600', 'text-white', 'shadow-lg'); btnGen.classList.add('text-slate-500');
+            panelVer.classList.remove('hidden'); panelGen.classList.add('hidden');
+        };
+
+        document.getElementById('file-gen').onchange = (e) => {
+            if(e.target.files[0]) document.getElementById('label-gen').innerText = e.target.files[0].name;
+        };
+        document.getElementById('file-ver').onchange = (e) => {
+            if(e.target.files[0]) document.getElementById('label-ver').innerText = e.target.files[0].name;
+        };
+
+        function copyHash() {
+            const h = document.getElementById('hash-val').innerText;
+            navigator.clipboard.writeText(h);
+            alert('Fingerprint copied to clipboard!');
+        }
+
+        document.getElementById('submit-gen').onclick = async () => {
+            const file = document.getElementById('file-gen').files[0];
+            if(!file) return alert('Please select a file first.');
+            
+            const btn = document.getElementById('submit-gen');
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Hashing...';
+
+            try {
+                const formData = new FormData(); formData.append('file', file);
+                const res = await fetch('http://localhost:5001/api/generate-hash', { method: 'POST', body: formData });
+                const data = await res.json();
+                document.getElementById('hash-val').innerText = data.hash;
+                document.getElementById('result-gen').classList.remove('hidden');
+            } finally {
+                btn.disabled = false; btn.innerHTML = originalText;
+            }
+        };
+
+        document.getElementById('submit-ver').onclick = async () => {
+            const file = document.getElementById('file-ver').files[0];
+            const hash = document.getElementById('hash-input').value;
+            if(!file || !hash) return alert('File and original fingerprint are required.');
+            
+            const btn = document.getElementById('submit-ver');
+            btn.disabled = true;
+            btn.innerHTML = '<svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Analyzing...';
+
+            try {
+                const formData = new FormData(); formData.append('file', file); formData.append('original_hash', hash);
+                const res = await fetch('http://localhost:5001/api/verify-integrity', { method: 'POST', body: formData });
+                const data = await res.json();
+                
+                const resultDiv = document.getElementById('result-ver');
+                const title = document.getElementById('ver-title');
+                const msg = document.getElementById('ver-msg');
+                const icon = document.getElementById('ver-icon');
+                const badge = document.getElementById('anomaly-badge');
+
+                resultDiv.classList.remove('hidden', 'bg-emerald-500/10', 'border-emerald-500/20', 'bg-red-500/10', 'border-red-500/20');
+                badge.classList.remove('hidden', 'bg-emerald-500/20', 'text-emerald-500', 'bg-red-500/20', 'text-red-500');
+
+                if(data.is_intact) {
+                    resultDiv.classList.add('bg-emerald-500/5', 'border-emerald-500/20');
+                    icon.classList.add('bg-emerald-500/10');
+                    icon.innerHTML = '<svg class="w-8 h-8 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>';
+                    title.innerText = 'File Intact'; title.className = 'text-xl font-bold text-emerald-500';
+                    msg.innerText = 'Fingerprints match. The file is authentic and has not been modified.';
+                    badge.classList.add('hidden');
+                } else {
+                    resultDiv.classList.add('bg-red-500/5', 'border-red-500/20');
+                    icon.classList.add('bg-red-500/10');
+                    icon.innerHTML = '<svg class="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>';
+                    title.innerText = 'Tampering Detected!'; title.className = 'text-xl font-bold text-red-500';
+                    msg.innerText = 'The current fingerprint does not match our records. File has been modified.';
+                    badge.innerText = 'AI Anomaly Score: ' + (data.anomaly_score * 100).toFixed(0) + '%';
+                    badge.classList.remove('hidden');
+                    badge.classList.add('bg-red-500/20', 'text-red-500', 'mt-4');
+                }
+            } finally {
+                btn.disabled = false; btn.innerHTML = 'Verify Authenticity';
+            }
+        };
+    </script>
+</body>
+</html>

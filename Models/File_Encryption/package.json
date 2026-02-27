@@ -1,0 +1,13 @@
+{
+  "name": "file-encryption",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static server for File Encryption tool",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Phishing Email Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>AI Phishing Email Detection</h1>
+            <p class="subtitle">Powered by Machine Learning</p>
+        </div>
+        
+        <div class="form-panel">
+            <form id="scanForm">
+                <div class="form-group">
+                    <label for="subject">Enter Email Subject/Sender Line</label>
+                    <input 
+                        type="text" 
+                        id="subject" 
+                        name="subject" 
+                        placeholder="Subject: Urgent password reset required"
+                        required
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label for="body">
+                        Email Body Content
+                        <span class="optional">(Optional, for better accuracy)</span>
+                    </label>
+                    <textarea 
+                        id="body" 
+                        name="body" 
+                        placeholder="Paste the first few lines of the email body here..."
+                        rows="6"
+                    ></textarea>
+                </div>
+                
+                <button type="submit" class="scan-button" id="scanButton">
+                    <svg class="lightning-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                    </svg>
+                    <span>Execute Scan</span>
+                </button>
+            </form>
+        </div>
+        
+        <div id="results" class="results-panel" style="display: none;">
+            <div class="result-header">
+                <h2>Scan Results</h2>
+            </div>
+            
+            <div class="result-content">
+                <div class="result-main">
+                    <div class="result-status" id="resultStatus">
+                        
+                    </div>
+                    <div class="probability-bar">
+                        <div class="probability-label">
+                            <span>Phishing Probability</span>
+                            <span id="phishingPercent">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="phishingProgress"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="model-breakdown">
+                    <h3>Model Breakdown</h3>
+                    <div class="model-scores" id="modelScores">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="error" class="error-message" style="display: none;">
+            
+        </div>
+        
+        <div class="loading" id="loading" style="display: none;">
+            <div class="spinner"></div>
+            <p>Analyzing email...</p>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
+

@@ -1,0 +1,13 @@
+{
+  "name": "password-generator-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static server for Advanced Password Generator",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

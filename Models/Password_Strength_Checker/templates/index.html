@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Password Strength Checker</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>🔒 Advanced Password Strength Checker</h1>
+            <p class="subtitle">Enter your password to check its strength in real-time</p>
+            
+            <div class="input-group">
+                <input 
+                    type="password" 
+                    id="passwordInput" 
+                    placeholder="Enter your password..."
+                    autocomplete="off"
+                >
+                <button class="toggle-visibility" id="toggleVisibility" aria-label="Toggle password visibility">
+                    👁️
+                </button>
+            </div>
+            
+            <div class="strength-meter">
+                <div class="strength-bar" id="strengthBar"></div>
+            </div>
+            
+            <div class="strength-label" id="strengthLabel">Enter a password</div>
+            
+            <div class="score-display">
+                <span class="score-label">Strength Score:</span>
+                <span class="score-value" id="scoreValue">0</span>
+                <span class="score-max">/ 100</span>
+            </div>
+            
+            <div class="requirements">
+                <h3>Password Requirements</h3>
+                <ul class="requirement-list" id="requirementList">
+                    <li data-requirement="length">
+                        <span class="icon">❌</span>
+                        <span class="text">At least 8 characters</span>
+                    </li>
+                    <li data-requirement="uppercase">
+                        <span class="icon">❌</span>
+                        <span class="text">Contains uppercase letters</span>
+                    </li>
+                    <li data-requirement="lowercase">
+                        <span class="icon">❌</span>
+                        <span class="text">Contains lowercase letters</span>
+                    </li>
+                    <li data-requirement="numbers">
+                        <span class="icon">❌</span>
+                        <span class="text">Contains numbers</span>
+                    </li>
+                    <li data-requirement="special">
+                        <span class="icon">❌</span>
+                        <span class="text">Contains special characters</span>
+                    </li>
+                    <li data-requirement="common">
+                        <span class="icon">❌</span>
+                        <span class="text">Not a common password</span>
+                    </li>
+                    <li data-requirement="repetition">
+                        <span class="icon">❌</span>
+                        <span class="text">No excessive character repetition</span>
+                    </li>
+                    <li data-requirement="sequences">
+                        <span class="icon">❌</span>
+                        <span class="text">No obvious sequences (e.g., 123, abc)</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="details">
+                <h3>Password Analysis</h3>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">Length:</span>
+                        <span class="detail-value" id="detailLength">0</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Character Variety:</span>
+                        <span class="detail-value" id="detailVariety">0</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Entropy:</span>
+                        <span class="detail-value" id="detailEntropy">0</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Estimated Crack Time:</span>
+                        <span class="detail-value" id="detailCrackTime">-</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="suggestions" id="suggestions"></div>
+        </div>
+    </div>
+    
+    <script src="/static/js/password-checker.js"></script>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
+

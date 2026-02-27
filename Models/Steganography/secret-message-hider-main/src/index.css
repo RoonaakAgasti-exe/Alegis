@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+@layer base {
+  :root {
+    --background: 220 20% 8%;
+    --foreground: 180 100% 95%;
+
+    --card: 220 18% 12%;
+    --card-foreground: 180 100% 95%;
+
+    --popover: 220 18% 12%;
+    --popover-foreground: 180 100% 95%;
+
+    --primary: 180 80% 50%;
+    --primary-foreground: 220 20% 8%;
+
+    --secondary: 220 15% 20%;
+    --secondary-foreground: 180 100% 95%;
+
+    --muted: 220 15% 18%;
+    --muted-foreground: 180 20% 60%;
+
+    --accent: 180 80% 50%;
+    --accent-foreground: 220 20% 8%;
+
+    --destructive: 0 70% 55%;
+    --destructive-foreground: 180 100% 95%;
+
+    --border: 220 15% 22%;
+    --input: 220 15% 22%;
+    --ring: 180 80% 50%;
+
+    --radius: 0.75rem;
+
+    --glow-primary: 180 100% 60%;
+    --gradient-tech: linear-gradient(135deg, hsl(180 80% 50% / 0.1), hsl(200 80% 50% / 0.1));
+    --shadow-glow: 0 0 30px hsl(180 80% 50% / 0.3);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-weight: 700;
+  }
+}
+
+@layer utilities {
+  .glow-text {
+    text-shadow: 0 0 20px hsl(var(--glow-primary) / 0.5);
+  }
+
+  .card-glow {
+    box-shadow: var(--shadow-glow);
+  }
+}

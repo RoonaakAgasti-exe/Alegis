@@ -1,0 +1,125 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  background: #000;
+}
+
+.auth-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at top left, #111 0%, #000 60%);
+}
+
+.auth-card {
+  width: 400px;
+  padding: 40px;
+  background: rgba(20, 20, 20, 0.85);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+  text-align: center;
+}
+
+.logo {
+  color: white;
+  font-weight: 700;
+  margin-bottom: 10px;
+  letter-spacing: 2px;
+  font-size: 28px;
+}
+
+.auth-card h2 {
+  color: white;
+  margin-bottom: 10px;
+  font-size: 24px;
+}
+
+.subtitle {
+  color: #aaa;
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+
+.auth-card input {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  border: 1px solid #222;
+  background: #111;
+  color: white;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.auth-card input:focus {
+  border: 1px solid #2f80ed;
+  outline: none;
+  box-shadow: 0 0 10px rgba(47, 128, 237, 0.5);
+}
+
+.auth-card input::placeholder {
+  color: #666;
+}
+
+.primary-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(90deg, #2f80ed, #56ccf2);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 14px;
+}
+
+.primary-btn:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.primary-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.switch-text {
+  margin-top: 20px;
+  color: #aaa;
+  font-size: 14px;
+}
+
+.switch-text span {
+  color: #56ccf2;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.switch-text span:hover {
+  color: #2f80ed;
+}
+
+.error-message {
+  color: #ff4757;
+  font-size: 13px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.success-message {
+  color: #2ed573;
+  font-size: 13px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+

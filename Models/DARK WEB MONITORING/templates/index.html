@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alegis: Dark Web Security Monitor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    
+    <nav class="floating-nav">
+        <div class="nav-left">
+            <div class="nav-brand">
+                <div class="brand-icon">🛡️</div>
+                <span class="brand-text">Alegis</span>
+            </div>
+            <div class="nav-links">
+                <a href="#monitor" class="nav-link active">Dark Web Monitor</a>
+            </div>
+        </div>
+        <div class="nav-right">
+            <div class="nav-actions">
+                <button class="nav-btn threat-btn">🔍 SCAN</button>
+            </div>
+        </div>
+    </nav>
+
+    
+    <div class="dashboard-container">
+        
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="gradient-text">Alegis</span>
+                    <br>Dark Web Security Monitor
+                </h1>
+                <p class="hero-subtitle">
+                    Scan your email against dark web databases to detect credential breaches and security exposures.
+                </p>
+            </div>
+        </section>
+
+        
+        <section class="scan-section">
+            <div class="scan-container">
+                <div class="scan-card">
+                    <h2 class="scan-title">🔍 Security Audit</h2>
+                    <p class="scan-description">Enter your email address to check for dark web exposures</p>
+
+                    <form id="scanForm" class="scan-form">
+                        <div class="input-group">
+                            <input
+                                type="email"
+                                id="emailInput"
+                                placeholder="Enter email address..."
+                                required
+                                class="email-input"
+                            >
+                            <button type="submit" class="scan-button" id="scanButton">
+                                <span class="button-text">RUN SECURITY AUDIT</span>
+                                <div class="button-icon">⚡</div>
+                            </button>
+                        </div>
+                    </form>
+
+                    
+                    <div id="progressContainer" class="progress-container hidden">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <p class="progress-text" id="progressText">Initializing scan...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        
+        <section id="resultsSection" class="results-section hidden">
+            <div class="results-container">
+                <div id="resultsCard" class="results-card">
+                    
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        document.getElementById('scanForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const email = document.getElementById('emailInput').value;
+            const scanButton = document.getElementById('scanButton');
+            const progressContainer = document.getElementById('progressContainer');
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            const resultsSection = document.getElementById('resultsSection');
+            const resultsCard = document.getElementById('resultsCard');
+
+            // Disable button and show progress
+            scanButton.disabled = true;
+            scanButton.innerHTML = '<span class="button-text">SCANNING...</span><div class="button-icon">🔄</div>';
+            progressContainer.classList.remove('hidden');
+            resultsSection.classList.add('hidden');
+
+            try {
+                // Simulate progress animation
+                for (let i = 0; i <= 100; i += 2) {
+                    await new Promise(resolve => setTimeout(resolve, 50));
+                    progressFill.style.width = i + '%';
+                    progressText.textContent = `Scanning layer ${Math.floor(i / 10)}...`;
+                }
+
+                // Make API call
+                const response = await fetch('/api/scan', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email: email })
+                });
+
+                const result = await response.json();
+
+                // Hide progress and show results
+                progressContainer.classList.add('hidden');
+                resultsSection.classList.remove('hidden');
+
+                if (result.is_exposed) {
+                    resultsCard.innerHTML = `
+                        <div class="result-card unsafe">
+                            <div class="result-icon">⚠️</div>
+                            <h3 class="result-title">SECURITY BREACH DETECTED</h3>
+                            <p class="result-message">Credentials for ${email} have been exposed on the dark web from ${result.breaches.length} breach(es).</p>
+                            <div class="breach-details">
+                                <h4>🔍 Breach Analysis</h4>
+                                <div class="breach-list">
+                                    ${result.breaches.map(breach => `
+                                        <div class="breach-item ${breach.severity.toLowerCase()}">
+                                            <div class="breach-header">
+                                                <strong class="breach-site">${breach.site}</strong>
+                                                <span class="breach-date">${breach.date}</span>
+                                            </div>
+                                            <div class="breach-info">
+                                                <span class="breach-type">${breach.breach_type}</span>
+                                                <span class="breach-severity severity-${breach.severity.toLowerCase()}">${breach.severity}</span>
+                                            </div>
+                                            <div class="breach-data">
+                                                <strong>Data Leaked:</strong> ${breach.data_leaked.join(', ')}
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                                <div class="breach-summary">
+                                    <p><strong>Total Breaches:</strong> ${result.breaches.length}</p>
+                                    <p><strong>Risk Level:</strong> <span class="risk-high">HIGH - Immediate Action Required</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    resultsCard.innerHTML = `
+                        <div class="result-card safe">
+                            <div class="result-icon">🛡️</div>
+                            <h3 class="result-title">YOU ARE SAFE</h3>
+                            <p class="result-message">No exposures found for ${email}. Your data appears secure.</p>
+                        </div>
+                    `;
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                resultsCard.innerHTML = `
+                    <div class="result-card error">
+                        <div class="result-icon">❌</div>
+                        <h3 class="result-title">SCAN FAILED</h3>
+                        <p class="result-message">An error occurred while scanning. Please try again.</p>
+                    </div>
+                `;
+                resultsSection.classList.remove('hidden');
+            } finally {
+                // Re-enable button
+                scanButton.disabled = false;
+                scanButton.innerHTML = '<span class="button-text">RUN SECURITY AUDIT</span><div class="button-icon">⚡</div>';
+                progressFill.style.width = '0%';
+            }
+        });
+    </script>
+</body>
+</html></content>
+<parameter name="filePath">d:\Adastra\ML-MODELS\DARK WEB MONITORING\templates\index.html

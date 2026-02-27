@@ -1,0 +1,47 @@
+
+> my-v0-project@0.1.0 build C:\Users\HP\Downloads\adastrs_hacka-main\adastrs_hacka-main
+> next build
+
+  Γû▓ Next.js 14.2.25
+
+   Creating an optimized production build ...
+ Γ£ô Compiled successfully
+   Skipping validation of types
+   Linting ...
+   Collecting page data ...
+   Generating static pages (0/6) ...
+TypeError: Cannot read properties of undefined (reading 'S')
+    at e.exports (C:\Users\HP\Downloads\adastrs_hacka-main\adastrs_hacka-main\.next\server\app\page.js:578:304636)
+    at C:\Users\HP\Downloads\adastrs_hacka-main\adastrs_hacka-main\.next\server\app\page.js:232:63662
+    at 219 (C:\Users\HP\Downloads\adastrs_hacka-main\adastrs_hacka-main\.next\server\app\page.js:232:63771)
+    at Object.t [as require] (C:\Users\HP\Downloads\adastrs_hacka-main\adastrs_hacka-main\.next\server\webpack-runtime.js:1:127)
+    at require (C:\Users\HP\Downloads\adastrs_hacka-main\adastrs_hacka-main\node_modules\.pnpm\next@14.2.25_@babel+core@7._d080b6f4614d054a3d407b3d4363a49f\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:16:18839)
+    at I (C:\Users\HP\Downloads\adastrs_hacka-main\adastrs_hacka-main\node_modules\.pnpm\next@14.2.25_@babel+core@7._d080b6f4614d054a3d407b3d4363a49f\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:12:94364)
+    at C (C:\Users\HP\Downloads\adastrs_hacka-main\adastrs_hacka-main\node_modules\.pnpm\next@14.2.25_@babel+core@7._d080b6f4614d054a3d407b3d4363a49f\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:12:92915)
+    at rR (C:\Users\HP\Downloads\adastrs_hacka-main\adastrs_hacka-main\node_modules\.pnpm\next@14.2.25_@babel+core@7._d080b6f4614d054a3d407b3d4363a49f\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:12:33975)
+    at nN (C:\Users\HP\Downloads\adastrs_hacka-main\adastrs_hacka-main\node_modules\.pnpm\next@14.2.25_@babel+core@7._d080b6f4614d054a3d407b3d4363a49f\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:12:62305)
+    at nB (C:\Users\HP\Downloads\adastrs_hacka-main\adastrs_hacka-main\node_modules\.pnpm\next@14.2.25_@babel+core@7._d080b6f4614d054a3d407b3d4363a49f\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:12:67539) {
+  digest: '2413192297'
+}
+
+Error occurred prerendering page "/". Read more: https://nextjs.org/docs/messages/prerender-error
+
+TypeError: Cannot read properties of undefined (reading 'S')
+    at e.exports (C:\Users\HP\Downloads\adastrs_hacka-main\adastrs_hacka-main\.next\server\app\page.js:578:304636)
+    at C:\Users\HP\Downloads\adastrs_hacka-main\adastrs_hacka-main\.next\server\app\page.js:232:63662
+    at 219 (C:\Users\HP\Downloads\adastrs_hacka-main\adastrs_hacka-main\.next\server\app\page.js:232:63771)
+    at Object.t [as require] (C:\Users\HP\Downloads\adastrs_hacka-main\adastrs_hacka-main\.next\server\webpack-runtime.js:1:127)
+    at require (C:\Users\HP\Downloads\adastrs_hacka-main\adastrs_hacka-main\node_modules\.pnpm\next@14.2.25_@babel+core@7._d080b6f4614d054a3d407b3d4363a49f\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:16:18839)
+    at I (C:\Users\HP\Downloads\adastrs_hacka-main\adastrs_hacka-main\node_modules\.pnpm\next@14.2.25_@babel+core@7._d080b6f4614d054a3d407b3d4363a49f\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:12:94364)
+    at C (C:\Users\HP\Downloads\adastrs_hacka-main\adastrs_hacka-main\node_modules\.pnpm\next@14.2.25_@babel+core@7._d080b6f4614d054a3d407b3d4363a49f\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:12:92915)
+    at rR (C:\Users\HP\Downloads\adastrs_hacka-main\adastrs_hacka-main\node_modules\.pnpm\next@14.2.25_@babel+core@7._d080b6f4614d054a3d407b3d4363a49f\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:12:33975)
+    at nN (C:\Users\HP\Downloads\adastrs_hacka-main\adastrs_hacka-main\node_modules\.pnpm\next@14.2.25_@babel+core@7._d080b6f4614d054a3d407b3d4363a49f\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:12:62305)
+    at nB (C:\Users\HP\Downloads\adastrs_hacka-main\adastrs_hacka-main\node_modules\.pnpm\next@14.2.25_@babel+core@7._d080b6f4614d054a3d407b3d4363a49f\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:12:67539)
+   Generating static pages (1/6) 
+   Generating static pages (2/6) 
+   Generating static pages (4/6) 
+ Γ£ô Generating static pages (6/6)
+
+> Export encountered errors on following paths:
+	/page: /
+ΓÇëELIFECYCLEΓÇë Command failed with exit code 1.
