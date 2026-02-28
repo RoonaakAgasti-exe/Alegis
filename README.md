@@ -28,6 +28,16 @@ Alegis is a comprehensive, multi-layered cybersecurity platform that combines a 
 
 ---
 
+---
+
+<img width="1893" height="889" alt="Screenshot 2026-02-28 010128" src="https://github.com/user-attachments/assets/7369ed10-da43-4ecc-8f6d-f7e596c3e22e" />
+<img width="1895" height="868" alt="Screenshot 2026-02-28 011809" src="https://github.com/user-attachments/assets/5db5257e-b397-4cfa-b6bd-b12f77ea1f3b" />
+<img width="987" height="872" alt="Screenshot 2026-02-28 011830" src="https://github.com/user-attachments/assets/d90908da-ade1-4105-9793-169549bcd70b" />
+
+---
+
+---
+
 ## Overview
 
 The Alegis ecosystem is built around three pillars:
