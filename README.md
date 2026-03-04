@@ -332,7 +332,17 @@ cd ../..
 
 ### Running the Ecosystem
 
-#### Option A: Master Startup Script (Recommended — Windows)
+#### Option A: Single Command (Recommended)
+
+Run everything (Homepage, Signup, Dashboard UI/API, all Node-based models) with one command from the project root:
+
+```bash
+npm run dev
+```
+
+This will automatically install required sub-project dependencies (Node-based) and start all services. Python-based models require Python and pip installed (see Prerequisites). Ports may auto-fallback if the defaults are busy; watch the terminal for the exact URLs.
+
+#### Option B: Master Startup Script (Windows PowerShell)
 
 Run all 12+ services in one command from the project root:
 
@@ -349,7 +359,7 @@ This will start:
 | Dashboard API | http://localhost:5007 |
 | All 9 ML Models | (see Port Reference below) |
 
-#### Option B: ML Models Only
+#### Option C: ML Models Only
 
 To start only the ML services without the Homepage or Dashboard:
 
@@ -357,7 +367,7 @@ To start only the ML services without the Homepage or Dashboard:
 powershell -ExecutionPolicy Bypass -File .\start_ml_models.ps1
 ```
 
-#### Option C: Manual Startup
+#### Option D: Manual Startup
 
 Start each service individually in separate terminals:
 

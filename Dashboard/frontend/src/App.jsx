@@ -23,7 +23,7 @@ function App() {
         setCurrentView(view);
       }
     } catch (e) {
-      
+      console.warn("Failed to parse URL params");
     }
 
     if (token && storedUser) {

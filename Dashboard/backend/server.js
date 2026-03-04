@@ -42,6 +42,17 @@ app.get('/api/alerts', (req, res) => {
 });
 
 const PORT = process.env.PORT || 5007;
-app.listen(PORT, () => {
-  console.log(`✓ Server running on http://localhost:${PORT}`);
-});
+function start(port) {
+  const server = app.listen(port, () => {
+    console.log(`✓ Server running on http://localhost:${port}`);
+  });
+  server.on('error', (err) => {
+    if (err && err.code === 'EADDRINUSE') {
+      start(port + 1);
+    } else {
+      throw err;
+    }
+  });
+}
+
+start(parseInt(PORT, 10));

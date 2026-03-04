@@ -1,0 +1,10 @@
+{
+  "name": "alegis-root",
+  "private": true,
+  "version": "0.0.1",
+  "scripts": {
+    "predev": "npm --prefix Homepage/frontend install && npm --prefix Dashboard/frontend install && npm --prefix Dashboard/backend install && npm --prefix Models/Deep-fake-detection/sentinel-vision-main install && npm --prefix Models/Steganography/secret-message-hider-main install && npm --prefix Models/File_Encryption install && npm --prefix Models/Fraud_Detection install && npm --prefix Models/Password_Generator install && npm --prefix Models/Password_Strength_Checker install",
+    "dev": "powershell -ExecutionPolicy Bypass -File start_all.ps1",
+    "models": "powershell -ExecutionPolicy Bypass -File start_ml_models.ps1"
+  }
+}

@@ -2,12 +2,23 @@ const express = require('express');
 const path = require('path');
 
 const app = express();
-const PORT = process.env.PORT || 3004;
+const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3004;
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-app.listen(PORT, () => {
-  console.log(`Fraud Detection server running at http://localhost:${PORT}`);
-});
+function start(port) {
+  const server = app.listen(port, () => {
+    console.log(`Fraud Detection server running at http://localhost:${port}`);
+  });
+  server.on('error', (err) => {
+    if (err && err.code === 'EADDRINUSE') {
+      start(port + 1);
+    } else {
+      throw err;
+    }
+  });
+}
+
+start(DEFAULT_PORT);
